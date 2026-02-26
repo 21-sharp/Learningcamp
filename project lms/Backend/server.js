@@ -10,7 +10,7 @@ import miscRoute from "./routes/miscellaneous.route.js";
 
 const app = express();
 
-app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+app.use(cors({ origin: ["http://localhost:3000", "https://cool-cats-stand.loca.lt"], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -20,7 +20,11 @@ app.use("/api/exams", examRoute);
 app.use("/api/misc", miscRoute);
 
 connectDB().then(() => {
-  app.listen(ENV.PORT, () => {
-    console.log(`🚀 Server running on ${ENV.PORT}`);
-  });
+  if (process.env.NODE_ENV !== "production") {
+    app.listen(ENV.PORT, () => {
+      console.log(`🚀 Server running on ${ENV.PORT}`);
+    });
+  }
 });
+
+export default app;
