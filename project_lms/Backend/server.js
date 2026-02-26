@@ -10,7 +10,7 @@ import miscRoute from "./routes/miscellaneous.route.js";
 
 const app = express();
 
-app.use(cors({ origin: ["http://localhost:3000", "https://cool-cats-stand.loca.lt"], credentials: true }));
+app.use(cors({ origin: ["http://localhost:3000", "https://many-apes-try.loca.lt"], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -19,12 +19,18 @@ app.use("/api/courses", courseRoute);
 app.use("/api/exams", examRoute);
 app.use("/api/misc", miscRoute);
 
+app.get("/", (req, res) => {
+  res.status(200).json({ status: "success", message: "API is running!" });
+});
+
 connectDB().then(() => {
   if (process.env.NODE_ENV !== "production") {
     app.listen(ENV.PORT, () => {
       console.log(`🚀 Server running on ${ENV.PORT}`);
     });
   }
+}).catch((err) => {
+  console.error("MongoDB Connection Failed on Serverless Startup: ", err);
 });
 
 export default app;

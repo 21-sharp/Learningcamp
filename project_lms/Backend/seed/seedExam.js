@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 
 import { connectDB } from "../config/db.js";
 import Course from "../Models/Courses.js";
-import Exam from "../models/Exam.js";
+import Exam from "../Models/Exam.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -70,7 +70,7 @@ const customQuestions = {
 
 for (let course of courses) {
   let questionsData = customQuestions[course.title] || customQuestions["default"];
-  
+
   let formattedQuestions = questionsData.map(q => ({
     question: q[0],
     options: q[1],
