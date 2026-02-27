@@ -10,7 +10,7 @@ import miscRoute from "./routes/miscellaneous.route.js";
 
 const app = express();
 
-app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
+app.use(cors({ origin: [ENV.CLIENT_URL], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -23,12 +23,19 @@ app.get("/", (req, res) => {
   res.status(200).json({ status: "success", message: "API is running!" });
 });
 
-connectDB().then(() => {
-  app.listen(ENV.PORT, () => {
-    console.log(`🚀 Server running on ${ENV.PORT}`);
-  });
-}).catch((err) => {
-  console.error("MongoDB Connection Failed: ", err);
-});
+// Root-level database connection logic
+if (process.env.NODE_ENV !== "test") {
+  connectDB()
+    .then(() => {
+      if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+        app.listen(ENV.PORT, () => {
+          console.log(`🚀 Server running on ${ENV.PORT}`);
+        });
+      }
+    })
+    .catch((err) => {
+      console.error("MongoDB Connection Failed: ", err);
+    });
+}
 
 export default app;
