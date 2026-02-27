@@ -1,7 +1,13 @@
 node_modules
 .DS_Store
 .env
+.env.tmp
+.env.production
 dist
 build
 .vercel
 *.log
+*.pptx
+build-log.txt
+project_lms
+temp_repo
