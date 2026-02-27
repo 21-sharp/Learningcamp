@@ -1,0 +1,14 @@
+{
+    "name": "learning-camp-root",
+    "version": "1.0.0",
+    "description": "Root package for Learning Camp LMS",
+    "scripts": {
+        "install:all": "npm install && cd Backend && npm install && cd ../frontend && npm install",
+        "seed": "cd Backend && node seed/generateSeeds.js && node seed/seedCourse.js && node seed/seedExam.js",
+        "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,green\" \"cd Backend && npm run start\" \"cd frontend && npm start\"",
+        "start": "npm run dev"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    }
+}
